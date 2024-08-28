@@ -78,7 +78,7 @@ void main( void )
 
     // Disable the Peripheral Interrupts
     // INTERRUPT_PeripheralInterruptDisable();
-    lcd_i2c_init( 0x27 ); // Inicializa la pantalla LCD
+    lcd_i2c_init( 0x27 );      // Inicializa la pantalla LCD
 
     lcd_i2c_clear();
     lcd_i2c_setCursor( 3, 0 );

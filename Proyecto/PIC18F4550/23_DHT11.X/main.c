@@ -75,8 +75,8 @@
 
 #define _XTAL_FREQ 48000000
 #include "LCD.h"
-#include "i2c1_master.h"
 #include "dht_sensor.h"
+#include "i2c1_master.h"
 #include <pic18f4550.h>
 #include <xc.h>
 
@@ -90,8 +90,8 @@ void main( void )
 
     I2C1_Initialize();
     __delay_ms( 1000 );
-    
-    lcd_i2c_init( 0x27 ); // Inicializa la pantalla LCD
+
+    lcd_i2c_init( 0x27 );      // Inicializa la pantalla LCD
 
     lcd_i2c_clear();
     lcd_i2c_setCursor( 3, 0 );

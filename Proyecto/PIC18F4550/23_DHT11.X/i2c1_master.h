@@ -49,7 +49,7 @@ void I2C1_SendNack();
 inline uint8_t I2C1_IsNack();
 uint8_t I2C1_Write( uint8_t byte );
 uint8_t I2C1_WriteSlave( uint8_t address, uint8_t *pBuffer, size_t len );
-uint8_t I2C1_Read( );
+uint8_t I2C1_Read();
 uint8_t I2C1_ReadSlave( uint8_t address, uint8_t *pBuffer, size_t len );
 
 /*******************************************************************************
@@ -64,7 +64,7 @@ void I2C1_Initialize( void )
     SSPCON1 = 0x28;
     SSPCON2 = 0x00;
     SSPSTAT = 0x00;
-    SSPADD = ((_XTAL_FREQ/4)/100000 - 1); // 100kHz
+    SSPADD = ( ( _XTAL_FREQ / 4 ) / 100000 - 1 ); // 100kHz
 
     // SDA & SCL
     TRISBbits.TRISB0 = 1;
@@ -80,7 +80,8 @@ void I2C1_Initialize( void )
 ********************************************************************************/
 void I2C1_Wait( void )
 {
-    while( SSPSTATbits.R_NOT_W | ( SSPCON2 & 0x1F ) );
+    while ( SSPSTATbits.R_NOT_W | ( SSPCON2 & 0x1F ) )
+        ;
 }
 
 /*******************************************************************************
@@ -172,7 +173,7 @@ uint8_t I2C1_Write( uint8_t byte )
     return SSPCON2bits.ACKSTAT;
 }
 
-uint8_t I2C1_Read( )
+uint8_t I2C1_Read()
 {
     uint8_t pData = 0;
     I2C1_Wait();
@@ -181,7 +182,6 @@ uint8_t I2C1_Read( )
     pData = SSPBUF;
     return pData;
 }
-
 
 /*******************************************************************************
  Funcion: I2C1_WriteSlave
@@ -198,12 +198,12 @@ uint8_t I2C1_Read( )
 uint8_t I2C1_WriteSlave( uint8_t address, uint8_t *pBuffer, size_t len )
 {
     I2C1_Start();
-    if ( I2C1_Write( (uint8_t)(address << 1) ) ) {
+    if ( I2C1_Write( (uint8_t)( address << 1 ) ) ) {
         I2C1_Stop();
         return 1;
     }
-        
-    for( size_t i = 0; i < len; i++ ) {
+
+    for ( size_t i = 0; i < len; i++ ) {
         if ( I2C1_Write( pBuffer[i] ) ) {
             I2C1_Stop();
             return 2;
@@ -224,9 +224,10 @@ uint8_t I2C1_WriteSlave( uint8_t address, uint8_t *pBuffer, size_t len )
 
  retorna: 0 en éxito, 1 si no se enconttró la dirección I2C en el BUS
 ********************************************************************************/
-uint8_t I2C1_ReadSlave( uint8_t address, uint8_t *pBuffer, size_t len ) {
+uint8_t I2C1_ReadSlave( uint8_t address, uint8_t *pBuffer, size_t len )
+{
     I2C1_Start();
-    if ( I2C1_Write( (uint8_t)(address << 1) + 0x01 ) ) {
+    if ( I2C1_Write( (uint8_t)( address << 1 ) + 0x01 ) ) {
         I2C1_Stop();
         return 1;
     }
