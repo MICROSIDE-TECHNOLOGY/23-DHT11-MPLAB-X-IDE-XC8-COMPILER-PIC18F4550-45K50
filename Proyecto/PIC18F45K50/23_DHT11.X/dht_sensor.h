@@ -175,7 +175,7 @@ int dht11_read( float *temp, float *hum )
     GIE = interrupt_status;
 
     *hum = (float)(data[0] + ( data[1] * 0.1 ));
-    *temp = (data[2] + ( data[3] * 0.1 ));
+    *temp = (float)(data[2] + ( data[3] * 0.1 ));
 
     if ( data[4] != ( data[0] + data[1] + data[2] + data[3] ) )
         return data[4];
